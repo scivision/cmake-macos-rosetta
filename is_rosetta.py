@@ -7,10 +7,7 @@ import platform
 
 def is_rosetta() -> bool:
 
-    if platform.system() != "Darwin":
-        return False
-
-    if platform.machine() != "arm64":
+    if platform.system() != "Darwin" or platform.machine() != "arm64":
         return False
 
     ret = subprocess.run(
@@ -23,6 +20,6 @@ def is_rosetta() -> bool:
 
 if __name__ == "__main__":
     if is_rosetta():
-        print(f"{sys.executable} running through Rosetta")
+        print(f"{sys.executable} is using Rosetta")
     else:
-        print(f"{sys.executable} not using Rosetta")
+        print(f"{sys.executable} is not using Rosetta")
