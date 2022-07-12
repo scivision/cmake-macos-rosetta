@@ -1,13 +1,16 @@
 #include <iostream>
 
-#if __APPLE__
+#ifdef __APPLE__
 #include <sys/sysctl.h>
+#endif
 
 bool is_rosetta(){
+
+#ifdef __APPLE__
    int ret = 0;
    size_t size = sizeof(ret);
 
-   if (sysctlbyname("sysctl.proc_translated", &ret, &size, NULL, 0) < 0)
+   if (sysctlbyname("sysctl.proc_translated", &ret, &size, nullptr, 0) < 0)
    {
       if (errno == ENOENT)
          return false;
@@ -15,12 +18,10 @@ bool is_rosetta(){
    }
 
    return (ret == 1);
-}
 #else
-bool is_rosetta(){
    return false;
-}
 #endif
+}
 
 int main(int argc, char ** argv) {
 
